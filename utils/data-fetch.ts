@@ -3,7 +3,7 @@ import { locationUrl } from "./location-utils";
 import { WeatherData } from "../models/weather/types";
 import { WeatherStateProps } from "../constants/types";
 import * as Location from "expo-location";
-async function getData(): Promise<WeatherStateProps | undefined> {
+export async function fetchData(): Promise<WeatherStateProps | undefined> {
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== "granted") {
     const url = locationUrl(40, 74);
