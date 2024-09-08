@@ -4,4 +4,5 @@ export interface WeatherStateProps {
   city: string | null;
   country: string | null;
   data: WeatherData | null;
+  savedTime: number;
 }

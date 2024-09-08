@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { INITIAL_STATE } from "../constants/weather-initial";
 import { WeatherStateProps } from "../constants/types";
-
+import { INITIAL_STATE } from "../constants/weather-initial";
 const weatherDataSlice = createSlice({
   initialState: INITIAL_STATE,
   name: "weather-data",
