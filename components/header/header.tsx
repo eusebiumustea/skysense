@@ -1,12 +1,12 @@
-import { View } from "react-native";
-import { useWeatherData } from "../../hooks";
-import { Text } from "react-native-fast-text";
 import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator, View } from "react-native";
+import { Text } from "react-native-fast-text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLocationData } from "../../hooks";
 
 export function Header() {
-  const data = useWeatherData();
   const { top } = useSafeAreaInsets();
+  const locationName = useLocationData();
   return (
     <View
       style={{
@@ -18,9 +18,14 @@ export function Header() {
       }}
     >
       <StatusBar style="light" />
-      <Text style={{ textAlign: "center", color: "#fff" }}>
-        {data.city}, {data.country}
-      </Text>
+      {locationName.length === 0 && (
+        <ActivityIndicator style={{ alignSelf: "center" }} />
+      )}
+      {locationName.length > 0 && (
+        <Text style={{ textAlign: "center", color: "#fff" }}>
+          {locationName}
+        </Text>
+      )}
     </View>
   );
 }

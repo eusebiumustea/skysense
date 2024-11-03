@@ -28,36 +28,30 @@ export interface WeatherData {
     rain: number;
     weather_code: number;
     cloud_cover: number;
-    wind_speed_10m: string;
+    wind_speed_10m: number;
   };
   hourly_units: {
     time: string;
     temperature_2m: string;
     dew_point_2m: string;
+    precipitation_probability: string;
   };
   hourly: {
     time: string[];
     temperature_2m: number[];
     dew_point_2m: number[];
+    precipitation_probability: number[];
   };
   daily_units: {
     time: string;
-    weather_code: string;
-    temperature_2m_max: string;
-    temperature_2m_min: string;
-    sunrise: string;
-    sunset: string;
-    daylight_duration: string;
-    uv_index_max: string;
+    apparent_temperature_max: string;
+    apparent_temperature_min: string;
+    precipitation_sum: string;
   };
   daily: {
     time: string[];
-    weather_code: number[];
-    temperature_2m_max: number[];
-    temperature_2m_min: number[];
-    sunrise: string[];
-    sunset: string[];
-    daylight_duration: number[];
-    uv_index_max: number[];
+    apparent_temperature_max: number[];
+    apparent_temperature_min: number[];
+    precipitation_sum: number[];
   };
 }

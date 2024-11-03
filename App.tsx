@@ -15,6 +15,7 @@ export default function App() {
   if (!loaded && !error) {
     return null;
   }
+
   return (
     <Provider store={store}>
       <SafeAreaProvider>

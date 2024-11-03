@@ -7,10 +7,17 @@ import Svg, {
   LinearGradient as SvgLinearGradient,
   Text as SvgText,
 } from "react-native-svg";
+import { shadow } from "../../ui-config/shadow";
+import { View } from "react-native";
 
 export function TextGradient({ children }: PropsWithChildren) {
   return (
-    <Svg style={{ width: 160, height: 80 }}>
+    <Svg
+      style={{
+        height: 80,
+        width: "32%",
+      }}
+    >
       <Defs>
         <SvgLinearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
           <Stop offset="0" stopColor="#A2A4B5" stopOpacity="1" />

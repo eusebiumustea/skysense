@@ -1,5 +1,5 @@
 export const shadow = {
-  elevation: 7,
+  elevation: 10,
   shadowColor: "#000",
   shadowOffset: {
     width: 0,
