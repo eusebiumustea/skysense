@@ -1,3 +1,4 @@
+import { StyleSheet } from "react-native";
 import Svg, { Path, SvgProps } from "react-native-svg";
 
 export function LineAsset({ ...props }: SvgProps) {
@@ -7,7 +8,7 @@ export function LineAsset({ ...props }: SvgProps) {
       viewBox="0 0 310 1"
       fill="none"
       {...props}
-      style={[{ width: "90%", alignSelf: "center" }, props.style]}
+      style={[styles.container, props.style]}
     >
       <Path
         d="M0 .5h309.5"
@@ -19,3 +20,7 @@ export function LineAsset({ ...props }: SvgProps) {
     </Svg>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { width: "90%", alignSelf: "center" },
+});

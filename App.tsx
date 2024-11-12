@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { Navigator } from "./tabs/navigator";
 SplashScreen.preventAutoHideAsync();
+
 export default function App() {
   const [loaded, error] = useFonts({
     medium: require("./assets/medium.ttf"),

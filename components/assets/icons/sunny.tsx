@@ -7,7 +7,7 @@ import Svg, {
   SvgProps,
 } from "react-native-svg";
 
-export function Sunny({ ...props }: SvgProps) {
+export function Sunny(props: SvgProps) {
   return (
     <Svg width={26} height={25} viewBox="0 0 26 25" fill="none" {...props}>
       <Path

@@ -1,7 +1,13 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Location from "expo-location";
 import { useCallback, useState } from "react";
-import { RefreshControl, ScrollView, ScrollViewProps } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  ScrollViewProps,
+  StyleSheet,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { useWeatherData } from "../../hooks";
 import { newLocationData } from "../../store/location-data-reducer";
@@ -19,7 +25,6 @@ export function ScreenContainer({ ...props }: ScrollViewProps) {
       const data = await fetchWeatherData(latitude, longitude);
       if (data) {
         dispatch(newWeatherData(data));
-        await AsyncStorage.setItem("weather-data", JSON.stringify(data));
       }
     }
     const location = await Location.reverseGeocodeAsync({
@@ -31,27 +36,41 @@ export function ScreenContainer({ ...props }: ScrollViewProps) {
         location[0].city || location[0].subregion || location[0].region
       }, ${location[0].country}`;
       dispatch(newLocationData(currentLocation));
-      await AsyncStorage.setItem("location", currentLocation);
     }
   }
+  const { bottom } = useSafeAreaInsets();
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await refreshWeatherData();
     setRefreshing(false);
   }, [weatherState]);
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          style={{ zIndex: 1 }}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          tintColor={"#fff"}
-        />
-      }
-      contentContainerStyle={{ padding: 16 }}
-      style={{ flex: 1 }}
-      {...props}
-    />
+    <LinearGradient colors={["#484B5B", "#2C2D35"]} style={styles.container}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            style={styles.refreshControl}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={"#fff"}
+          />
+        }
+        {...props}
+        style={[styles.scrollView, props.style]}
+        contentContainerStyle={[
+          styles.contentContainerStyle,
+          { paddingBottom: 16 + bottom },
+          props.contentContainerStyle,
+        ]}
+      />
+    </LinearGradient>
   );
 }
+const styles = StyleSheet.create({
+  contentContainerStyle: { padding: 16 },
+  scrollView: { flex: 1, backgroundColor: "transparent" },
+  refreshControl: { zIndex: 1 },
+  container: {
+    flex: 1,
+  },
+});

@@ -7,8 +7,6 @@ import Svg, {
   LinearGradient as SvgLinearGradient,
   Text as SvgText,
 } from "react-native-svg";
-import { shadow } from "../../ui-config/shadow";
-import { View } from "react-native";
 
 export function TextGradient({ children }: PropsWithChildren) {
   return (

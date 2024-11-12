@@ -1,5 +1,4 @@
-import { View } from "react-native";
-import { Text } from "react-native-fast-text";
+import { View, Text } from "react-native";
 
 export function Forecast() {
   return (

@@ -11,15 +11,21 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ],
-      ["expo-font"]
+      ["expo-font"],
+      "expo-secure-store",
+      [
+        "expo-splash-screen",
+        {
+          "imageWidth": "100%"
+        }
+      ]
     ],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash-screen.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "ios": {
       "bundleIdentifier": "com.eusebiu.skysense",
@@ -38,10 +44,6 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.eusebiu.skysense"
-    },
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/favicon.png"
     }
   }
 }

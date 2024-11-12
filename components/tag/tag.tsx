@@ -1,9 +1,8 @@
 import { PropsWithChildren } from "react";
-import { View } from "react-native";
-import { FastTextProps, Text } from "react-native-fast-text";
+import { View, Text, TextProps } from "react-native";
 import { shadow } from "../../ui-config/shadow";
 
-export function Tag({ ...rest }: PropsWithChildren<FastTextProps>) {
+export function Tag({ ...rest }: PropsWithChildren<TextProps>) {
   return (
     <View
       style={[
