@@ -3,7 +3,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { Navigator } from "./tabs/navigator";
+import { Navigator } from "./router/navigator";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as Location from "expo-location";
-import { WeatherStateProps } from "../constants/types";
+import { WeatherStateProps } from "../config/types";
 import { WeatherData } from "../models/weather/types";
 import { locationUrl } from "./location-utils";
 export async function fetchWeatherData(

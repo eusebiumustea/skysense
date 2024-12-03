@@ -9,19 +9,21 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { useWeatherData } from "../../hooks";
 import { newLocationData } from "../../store/location-data-reducer";
 import { newWeatherData } from "../../store/weather-data-reducer";
 import { fetchWeatherData } from "../../utils";
-export function ScreenContainer({ ...props }: ScrollViewProps) {
+interface ScreenContainerProps extends ScrollViewProps {
+  savedTime: number;
+}
+export function ScreenContainer({ savedTime, ...props }: ScreenContainerProps) {
   const dispatch = useDispatch();
-  const weatherState = useWeatherData();
+
   const [refreshing, setRefreshing] = useState(false);
   async function refreshWeatherData() {
     const {
       coords: { latitude, longitude },
     } = await Location.getCurrentPositionAsync();
-    if (new Date().getTime() >= weatherState.savedTime + 480000) {
+    if (new Date().getTime() >= savedTime + 480000) {
       const data = await fetchWeatherData(latitude, longitude);
       if (data) {
         dispatch(newWeatherData(data));
@@ -43,7 +45,7 @@ export function ScreenContainer({ ...props }: ScrollViewProps) {
     setRefreshing(true);
     await refreshWeatherData();
     setRefreshing(false);
-  }, [weatherState]);
+  }, [savedTime]);
   return (
     <LinearGradient colors={["#484B5B", "#2C2D35"]} style={styles.container}>
       <ScrollView

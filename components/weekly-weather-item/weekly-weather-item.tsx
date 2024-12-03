@@ -1,19 +1,22 @@
-import { FlashList } from "@shopify/flash-list";
 import { MotiView } from "moti";
 import { MotiPressable } from "moti/interactions";
-import { memo, ReactNode, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { memo, ReactNode, useEffect, useMemo, useState } from "react";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { useWeatherData } from "../../hooks";
+import { IconNames } from "../../models/ui/types";
+import { WeatherData } from "../../models/weather/types";
+import { getIconName } from "../../utils/render-icon";
 import { Chevron } from "../assets";
 import { DailyHourlyCard } from "../daily-hourly-card";
-import { IconNames } from "../../models/ui/types";
 interface WeeklyWeatherItemProps {
   dayName: string;
   icon: ReactNode;
   high: number;
   low: number;
-  expanded: boolean;
-  onPress: () => void;
-  hours: DailyHourProps[];
+  // expanded: boolean;
+  // onPress: () => void;
+
+  time: string;
 }
 interface DailyHourProps {
   temp: number;
@@ -21,39 +24,64 @@ interface DailyHourProps {
   iconName: IconNames;
 }
 export const WeeklyWeatherItem = memo(
-  ({
-    dayName,
-    icon,
-    high,
-    low,
-    expanded,
-    onPress,
-    hours,
-  }: WeeklyWeatherItemProps) => {
+  ({ dayName, icon, high, low, time }: WeeklyWeatherItemProps) => {
+    const {
+      data: { hourly },
+    } = useWeatherData() as { data: WeatherData };
+    // const [showList, setShowList] = useState(false);
+    // useEffect(() => {
+    //   if (expanded) {
+    //     setTimeout(() => setShowList(true), 260);
+    //   } else {
+    //     setShowList(false);
+    //   }
+    // }, [expanded]);
+    const [expanded, setExpanded] = useState(false);
+    const hours: DailyHourProps[] = useMemo(
+      () =>
+        hourly.time
+          .map((time, i) => ({
+            time,
+            temp: hourly.temperature_2m[i],
+            iconName: getIconName(
+              0,
+              hourly.temperature_2m[i],
+              hourly.precipitation_probability[i],
+              0,
+              0
+            ),
+          }))
+          .filter(({ time: hourTime }) => {
+            return (
+              new Date(hourTime).setHours(0, 0, 0, 0) ===
+              new Date(time).setHours(0, 0, 0, 0)
+            );
+          })
+          .slice(0, 24),
+      [hourly]
+    );
+
     return (
       <MotiView
         animate={{
-          paddingHorizontal: expanded ? 8 : 0,
-          paddingBottom: expanded ? 108 : 0,
-          paddingTop: expanded ? 8 : 0,
-          borderRadius: expanded ? 10 : 0,
           backgroundColor: expanded
             ? "rgba(248, 248, 248, 0.14)"
             : "transparent",
+          height: expanded ? 140 : 40,
         }}
         transition={{
           type: "timing",
-          duration: 260,
+          duration: 180,
         }}
         style={styles.container}
       >
         <MotiPressable
-          onPress={onPress}
+          onPress={() => setExpanded((prev) => !prev)}
+          style={styles.cardPreview}
           transition={{
             type: "timing",
             duration: 100,
           }}
-          style={styles.cardPreview}
           animate={useMemo(
             () =>
               ({ pressed }) => {
@@ -75,43 +103,51 @@ export const WeeklyWeatherItem = memo(
             <Text style={styles.text}>{low}°</Text>
           </View>
         </MotiPressable>
-        {expanded && (
-          <MotiView
-            style={styles.listContainer}
-            transition={{ type: "timing", delay: 300, duration: 150 }}
-            from={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <FlashList
-              estimatedItemSize={40}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={hours}
-              keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item }) => <DailyHourlyCard {...item} />}
+
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={hours}
+          updateCellsBatchingPeriod={1000}
+          initialNumToRender={3}
+          maxToRenderPerBatch={3}
+          style={[styles.listContainer]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <DailyHourlyCard
+              temp={item.temp}
+              time={item.time}
+              iconName={item.iconName}
             />
-          </MotiView>
-        )}
+          )}
+        />
       </MotiView>
     );
   }
 );
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    alignItems: "center",
+    // flexDirection: "column",
+    // alignItems: "center",
+    borderRadius: 10,
+    // height: 26,
+    overflow: "hidden",
+    // height: 40,
   },
   cardPreview: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    alignItems: "center",
+    paddingTop: 10,
   },
   day: {
     flexDirection: "row",
     alignItems: "center",
     columnGap: 8,
-    width: "22%",
+    width: "26%",
   },
   text: {
     fontSize: 12,
@@ -123,5 +159,10 @@ const styles = StyleSheet.create({
     width: "22%",
     justifyContent: "space-between",
   },
-  listContainer: { height: 92, position: "absolute", bottom: 8 },
+  listContainer: {
+    position: "absolute",
+
+    paddingHorizontal: 8,
+    marginTop: 40,
+  },
 });

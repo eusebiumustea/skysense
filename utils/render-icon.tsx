@@ -28,7 +28,7 @@ export function getIconName(
 export function RenderIcon({
   iconName,
   width = 130,
-  height = 140,
+  height = 130,
 }: {
   iconName: IconNames;
   width?: number;

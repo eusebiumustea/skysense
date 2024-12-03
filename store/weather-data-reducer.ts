@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { INITIAL_STATE } from "../constants/weather-initial";
+import { INITIAL_STATE } from "../config/weather-initial";
 import { WeatherData } from "../models/weather/types";
 interface PayloadActionProps {
   locationName?: string | null;

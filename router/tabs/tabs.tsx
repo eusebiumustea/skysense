@@ -2,15 +2,16 @@ import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
 } from "@react-navigation/material-top-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { Header } from "../components";
-import { Forecast, Home } from "./screens";
+import { Header } from "../../components";
+import { Home } from "./home";
+import { Precipitations } from "./precipitations";
+
 const screenOptions: MaterialTopTabNavigationOptions = {
   tabBarActiveTintColor: "#fff",
   tabBarInactiveTintColor: "#868794",
   tabBarIndicatorStyle: {
     width: 26,
-    marginHorizontal: 85,
+    marginHorizontal: "21%",
     backgroundColor: "white",
     borderRadius: 100,
     height: 1,
@@ -30,9 +31,9 @@ const screenOptions: MaterialTopTabNavigationOptions = {
   lazy: true,
 };
 const Tab = createMaterialTopTabNavigator();
-export function Navigator() {
+export function Tabs() {
   return (
-    <NavigationContainer>
+    <>
       <Header />
       <Tab.Navigator
         screenOptions={screenOptions}
@@ -40,8 +41,8 @@ export function Navigator() {
         initialRouteName="Today"
       >
         <Tab.Screen name="Today" component={Home} />
-        <Tab.Screen name="Precipitation" component={Forecast} />
+        <Tab.Screen name="Precipitation" component={Precipitations} />
       </Tab.Navigator>
-    </NavigationContainer>
+    </>
   );
 }

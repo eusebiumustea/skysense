@@ -22,7 +22,7 @@ import { fetchWeatherData } from "../../../utils";
 import { getIconName, RenderIcon } from "../../../utils/render-icon";
 export function Home() {
   const dispatch = useDispatch();
-  const { data } = useWeatherData();
+  const { data, savedTime } = useWeatherData();
 
   const [status, request] = Location.useForegroundPermissions();
   useEffect(() => {
@@ -93,7 +93,10 @@ export function Home() {
   );
 
   return (
-    <ScreenContainer contentContainerStyle={styles.screenContainer}>
+    <ScreenContainer
+      savedTime={savedTime}
+      contentContainerStyle={styles.screenContainer}
+    >
       {!data && <ActivityIndicator size="large" style={styles.activity} />}
       {data && (
         <>
@@ -113,17 +116,15 @@ export function Home() {
             </Text>
             {"      |      "}Wind{"  "}
             <Text style={styles.windText}>
-              {data.current.wind_speed_10m}
-              {data.current_units.wind_speed_10m}
+              {data?.current.wind_speed_10m}
+              {data?.current_units.wind_speed_10m}
             </Text>
           </Text>
           <LineAsset />
 
           <PropertyItemsLayout data={data.current} units={data.current_units} />
           {data.hourly && <HourlyDataList data={data.hourly} />}
-          {data.daily && (
-            <WeeklyWeatherList daily={data.daily} hourly={data.hourly} />
-          )}
+          <WeeklyWeatherList daily={data.daily} hourly={data.hourly} />
           {details && (
             <DetailsCard
               icon={<RenderIcon iconName={iconName} />}

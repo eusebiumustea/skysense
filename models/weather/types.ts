@@ -48,6 +48,9 @@ export interface DailyWeather {
   time: string[];
   uv_index_max: number[];
   weather_code: number[];
+
+  precipitation_probability_max: number[];
+  wind_speed_10m_max: number[];
 }
 
 interface DailyUnits {
@@ -59,6 +62,8 @@ interface DailyUnits {
   time: string;
   uv_index_max: string;
   weather_code: string;
+  precipitation_probability_max: string;
+  wind_speed_10m_max: string;
 }
 
 export interface HourlyWeather {

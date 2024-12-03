@@ -5,3 +5,4 @@ export * from "./sunset";
 export * from "./drop";
 export * from "./information";
 export * from "./chevron-icon";
+export * from "./search";

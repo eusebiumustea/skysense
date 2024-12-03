@@ -9,14 +9,7 @@ interface DetailsCardProps {
 export function DetailsCard({ detailsDataProps, icon }: DetailsCardProps) {
   return (
     <BackgroundGradientCard title="Details" colors={["#232329", "#2F313A"]}>
-      <View
-        style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
-          paddingTop: 16,
-        }}
-      >
+      <View style={styles.container}>
         {icon}
         <View
           style={{
@@ -40,4 +33,11 @@ const styles = StyleSheet.create({
   viewProp: { flexDirection: "row", columnGap: 32 },
   key: { color: "#fff", opacity: 0.5, fontSize: 14 },
   value: { color: "#fff", fontSize: 14 },
+  container: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingTop: 16,
+    width: "100%",
+  },
 });

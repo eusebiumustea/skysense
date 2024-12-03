@@ -12,3 +12,4 @@ export * from "./weekly-weather-list";
 export * from "./details-card";
 export * from "./day-card";
 export * from "./daily-hourly-card";
+export * from "./precipitation-card";
