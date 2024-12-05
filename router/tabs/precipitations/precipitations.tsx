@@ -4,6 +4,7 @@ import { BarChart } from "react-native-chart-kit";
 import { AbstractChartConfig } from "react-native-chart-kit/dist/AbstractChart";
 import { PrecipitationCard, ScreenContainer } from "../../../components";
 import { useWeatherData } from "../../../hooks";
+import { useLocationData } from "../../../hooks/use-location-data";
 const chartConfig: AbstractChartConfig = {
   color: () => "#fff",
   fillShadowGradientFrom: "#D2D2D3",
@@ -22,6 +23,7 @@ const chartConfig: AbstractChartConfig = {
 export function Precipitations() {
   const { width } = useWindowDimensions();
   const { savedTime, data } = useWeatherData();
+  const locationData = useLocationData();
   const weekDays = useMemo(
     () =>
       data?.daily.time.map((time) =>
@@ -50,7 +52,14 @@ export function Precipitations() {
   }, [data]);
 
   return (
-    <ScreenContainer savedTime={savedTime}>
+    <ScreenContainer
+      selectedLocation={
+        (locationData.selectedLocation !== "current" &&
+          locationData.selectedLocation) ||
+        null
+      }
+      savedTime={savedTime}
+    >
       <Text style={styles.title}>Precipitation</Text>
       {data?.daily && (
         <>

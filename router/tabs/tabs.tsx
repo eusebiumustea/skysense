@@ -5,10 +5,13 @@ import {
 import { Header } from "../../components";
 import { Home } from "./home";
 import { Precipitations } from "./precipitations";
+import { Dimensions, Platform } from "react-native";
 
 const screenOptions: MaterialTopTabNavigationOptions = {
   tabBarActiveTintColor: "#fff",
   tabBarInactiveTintColor: "#868794",
+  tabBarScrollEnabled: false,
+
   tabBarIndicatorStyle: {
     width: 26,
     marginHorizontal: "21%",
@@ -17,9 +20,8 @@ const screenOptions: MaterialTopTabNavigationOptions = {
     height: 1,
     bottom: -1,
   },
-  swipeEnabled: false,
+  swipeEnabled: true,
   tabBarBounces: false,
-  tabBarAndroidRipple: { color: "#484B5B", borderless: false },
   tabBarStyle: {
     backgroundColor: "transparent",
     elevation: 0,

@@ -61,7 +61,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 12,
   },
-  precipitationDisplayText: { color: "#fff", fontSize: 12 },
+  precipitationDisplayText: {
+    color: "#fff",
+    fontSize: 10,
+  },
   container: {
     alignSelf: "flex-start",
     alignItems: "center",

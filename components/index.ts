@@ -13,3 +13,5 @@ export * from "./details-card";
 export * from "./day-card";
 export * from "./daily-hourly-card";
 export * from "./precipitation-card";
+export * from "./search-card";
+export * from "./search-input";

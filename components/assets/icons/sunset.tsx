@@ -11,46 +11,40 @@ import Svg, {
 
 export function Sunset({ ...props }: SvgProps) {
   return (
-    <Svg width={27} height={31} viewBox="0 0 27 31" fill="none" {...props}>
-      <G filter="url(#filter0_d_0_220)">
+    <Svg width={12} height={15} viewBox="0 0 12 15" fill="none" {...props}>
+      <G filter="url(#filter0_d_0_447)">
         <Path
           fillRule="evenodd"
           clipRule="evenodd"
-          d="M24.219 18.911c-4.831-.664-8.552-4.81-8.552-9.823a9.886 9.886 0 012.96-7.067C13.813 2.311 10 6.314 10 11.211c0 5.084 4.112 9.206 9.184 9.206a9.125 9.125 0 005.035-1.506z"
-          fill="url(#paint0_radial_0_220)"
+          d="M6.089 1.015C2.692 1.219 0 4.045 0 7.502 0 11.09 2.903 14 6.483 14c1.312 0 2.533-.39 3.554-1.063A7.001 7.001 0 016.089 1.015z"
+          fill="url(#paint0_radial_0_447)"
         />
       </G>
-      <Circle
-        opacity={0.2}
-        cx={25.5834}
-        cy={11.9211}
-        r={1.41667}
-        fill="#D8D8D8"
-      />
+      <Circle opacity={0.2} cx={11} cy={8.00317} r={1} fill="#D8D8D8" />
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M24.167 6.25l-1.666.876.318-1.855-1.347-1.313 1.862-.27L24.167 2l.832 1.687 1.862.27-1.347 1.314.318 1.855-1.665-.876z"
-        fill="url(#paint1_linear_0_220)"
+        d="M10 4l-1.176.618.225-1.309-.951-.927 1.314-.191L10 1l.588 1.191 1.314.191-.95.927.224 1.309L10 4z"
+        fill="url(#paint1_linear_0_447)"
       />
       <Defs>
         <RadialGradient
-          id="paint0_radial_0_220"
+          id="paint0_radial_0_447"
           cx={0}
           cy={0}
           r={1}
           gradientUnits="userSpaceOnUse"
-          gradientTransform="matrix(0 21.5659 -16.699 0 17.525 6)"
+          gradientTransform="matrix(0 15.2232 -11.7862 0 5.311 3.823)"
         >
           <Stop stopColor="#fff" />
           <Stop offset={1} stopColor="#DEE5EE" />
         </RadialGradient>
         <LinearGradient
-          id="paint1_linear_0_220"
-          x1={21.3895}
-          y1={3.5667}
-          x2={21.3895}
-          y2={9.12094}
+          id="paint1_linear_0_447"
+          x1={8.03968}
+          y1={2.1059}
+          x2={8.03968}
+          y2={6.02655}
           gradientUnits="userSpaceOnUse"
         >
           <Stop stopColor="#fff" />

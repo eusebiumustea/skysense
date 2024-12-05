@@ -43,7 +43,7 @@ export function HourlyDataList({ data }: HourlyDataListProps) {
           index: hourData?.findIndex(({ isFocused }) => isFocused),
           animated: true,
         }),
-      400
+      500
     );
   }, [data]);
   return (
@@ -51,6 +51,7 @@ export function HourlyDataList({ data }: HourlyDataListProps) {
       ref={scrollRef}
       estimatedItemSize={56}
       horizontal
+      overScrollMode="always"
       initialScrollIndex={
         hourData?.findIndex(({ isFocused }) => isFocused) || 0
       }

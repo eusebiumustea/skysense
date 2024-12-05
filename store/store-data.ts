@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { initStore, persistReducer } from "react-native-redux-persist2";
 import { locationDataReducer } from "./location-data-reducer";
+import { storedLocationNameReducer } from "./location-name-reducer";
 import { weatherDataReducer } from "./weather-data-reducer";
 const reducers = {
-  dataReducer: weatherDataReducer,
-  locationNameReducer: locationDataReducer,
+  weatherDataReducer,
+  locationDataReducer,
+  storedLocationNameReducer,
 };
 const rootReducers = persistReducer(reducers);
 

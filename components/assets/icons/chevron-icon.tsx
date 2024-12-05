@@ -2,6 +2,7 @@ import Svg, { Path, SvgProps } from "react-native-svg";
 interface ChevronIconProps extends SvgProps {
   direction: "down" | "up";
 }
+
 export function Chevron({ direction = "down", ...props }: ChevronIconProps) {
   return (
     <Svg

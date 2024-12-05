@@ -81,3 +81,8 @@ interface HourlyUnits {
   time: string;
   visibility: string;
 }
+export interface FetchWeatherResult {
+  data: WeatherData | null;
+  savedTime: number;
+  name: string;
+}

@@ -1,18 +1,21 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/commonjs/src/types";
 import { StatusBar } from "expo-status-bar";
 import {
   ActivityIndicator,
-  View,
-  Text,
   StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useLocationData } from "../../hooks";
+import { useLocationName } from "../../hooks";
 import { Search } from "../assets";
 
 export function Header() {
   const { top } = useSafeAreaInsets();
-  const locationName = useLocationData();
+  const locationName = useLocationName();
+  const nav = useNavigation<NativeStackNavigationHelpers>();
   return (
     <View style={[styles.container, { paddingTop: top + 16 }]}>
       <StatusBar style="light" />
@@ -23,8 +26,9 @@ export function Header() {
         <Text style={styles.label}>{locationName}</Text>
       )}
       <TouchableOpacity
+        onPress={() => nav.navigate("Finder")}
         style={[styles.searchButton, { top: top + 16 }]}
-        activeOpacity={0.7}
+        activeOpacity={0.5}
       >
         <Search />
       </TouchableOpacity>
@@ -32,7 +36,7 @@ export function Header() {
   );
 }
 const styles = StyleSheet.create({
-  label: { textAlign: "center", color: "#fff" },
+  label: { textAlign: "center", color: "#fff", fontSize: 16 },
   activity: { alignSelf: "center" },
   container: {
     paddingBottom: 16,
@@ -45,5 +49,7 @@ const styles = StyleSheet.create({
   searchButton: {
     position: "absolute",
     right: 16,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
   },
 });

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
+import { LocationProps } from "../models/locations/types";
 
 export const useLocationData = () =>
   useSelector(
-    (state: { locationNameReducer: string }) => state.locationNameReducer
+    (state: { locationDataReducer: LocationProps }) => state.locationDataReducer
   );

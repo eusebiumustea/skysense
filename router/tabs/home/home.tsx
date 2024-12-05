@@ -16,51 +16,55 @@ import {
 } from "../../../components";
 import { useWeatherData } from "../../../hooks";
 import { DetailsDataProps } from "../../../models/details/types";
-import { newLocationData } from "../../../store/location-data-reducer";
+
+import { useLocationData } from "../../../hooks/use-location-data";
+import { newLocationName } from "../../../store/location-name-reducer";
 import { newWeatherData } from "../../../store/weather-data-reducer";
-import { fetchWeatherData } from "../../../utils";
+import { fetchCurrentWeather, fetchWeather } from "../../../utils";
 import { getIconName, RenderIcon } from "../../../utils/render-icon";
 export function Home() {
   const dispatch = useDispatch();
   const { data, savedTime } = useWeatherData();
-
+  const locationData = useLocationData();
   const [status, request] = Location.useForegroundPermissions();
   useEffect(() => {
     async function getData() {
       try {
         if (!status?.granted) {
           const newStatus = await request();
-
           if (!newStatus?.granted) {
             return;
           }
         }
-
         await SplashScreen.hideAsync();
+        if (locationData.selectedLocation === "current") {
+          const { name, savedTime, data } = await fetchCurrentWeather();
 
-        const {
-          coords: { latitude, longitude },
-        } = await Location.getCurrentPositionAsync();
+          if (data) {
+            dispatch(newWeatherData({ data, savedTime }));
+          }
 
-        const data = await fetchWeatherData(latitude, longitude);
-
-        if (data) {
-          dispatch(newWeatherData(data));
+          if (name.length > 0) {
+            dispatch(newLocationName(name));
+          }
+          return;
         }
-        const location = await Location.reverseGeocodeAsync({
-          latitude,
-          longitude,
-        });
-        if (location.length > 0) {
-          const currentLocation = `${
-            location[0].city || location[0].subregion || location[0].region
-          }, ${location[0].country}`;
-          dispatch(newLocationData(currentLocation));
+        const coords = locationData.selectedLocation.coordinates;
+        const { name, savedTime, data } = await fetchWeather(
+          coords.lat,
+          coords.long
+        );
+        if (data) {
+          dispatch(newWeatherData({ savedTime, data: data || null }));
+        }
+        if (name.length > 0) {
+          dispatch(newLocationName(locationData.selectedLocation.name));
         }
       } catch (error) {
         SplashScreen.hide();
       }
     }
+
     getData();
   }, []);
 
@@ -94,15 +98,20 @@ export function Home() {
 
   return (
     <ScreenContainer
+      selectedLocation={
+        (locationData.selectedLocation !== "current" &&
+          locationData.selectedLocation) ||
+        null
+      }
       savedTime={savedTime}
-      contentContainerStyle={styles.screenContainer}
+      scrollViewProps={{ contentContainerStyle: styles.screenContainer }}
     >
       {!data && <ActivityIndicator size="large" style={styles.activity} />}
       {data && (
         <>
           <Tag style={styles.dateTag}>{new Date().toDateString()}</Tag>
           <View style={styles.header}>
-            <RenderIcon iconName={iconName} />
+            <RenderIcon iconName={iconName} width={120} height={90} />
             <TextGradient>
               {Math.round(data.current.temperature_2m)}°
             </TextGradient>
