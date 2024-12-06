@@ -14,7 +14,6 @@ export function TextGradient({ children }: PropsWithChildren) {
       style={{
         height: 80,
         width: "32%",
-        backgroundColor: "red",
       }}
     >
       <Defs>

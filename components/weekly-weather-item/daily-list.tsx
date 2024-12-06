@@ -8,8 +8,6 @@ interface DailyHourProps {
   iconName: IconNames;
 }
 export const DailyList = memo(({ hours }: { hours: DailyHourProps[] }) => {
-  console.log("re ");
-
   return (
     <FlatList
       showsHorizontalScrollIndicator={false}
