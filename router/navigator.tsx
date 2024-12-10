@@ -12,7 +12,7 @@ export function Navigator() {
       <Stack.Navigator
         initialRouteName="Tabs"
         screenOptions={{
-          animation: "fade",
+          animation: "default",
           presentation: "transparentModal",
           animationDuration: 120,
           headerShown: false,

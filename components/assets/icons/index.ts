@@ -12,3 +12,4 @@ export * from "./add-icon";
 export * from "./arrow-forward";
 export * from "./check-icon";
 export * from "./back-icon";
+export * from "./delete";

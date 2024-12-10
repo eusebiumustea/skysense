@@ -7,6 +7,7 @@ const locationDataSlice = createSlice({
     selectedLocation: "current",
   } as LocationProps,
   name: "location-data",
+
   reducers: {
     selectNewLocation: (state, { payload }: { payload: SavedLocation }) => {
       return { ...state, selectedLocation: payload };

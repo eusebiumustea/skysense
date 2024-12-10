@@ -1,9 +1,10 @@
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
-import { store } from "./store";
 import { Navigator } from "./router/navigator";
+import { store } from "./store";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -20,7 +21,9 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <Navigator />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Navigator />
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </Provider>
   );

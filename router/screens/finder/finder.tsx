@@ -1,31 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/commonjs/src/types";
-import { memo, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { memo } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Animated, { CurvedTransition } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { Back, SearchCard, SearchInput } from "../../../components";
+import { Back, SearchCard } from "../../../components";
 import { useLocationData } from "../../../hooks/use-location-data";
-import { SavedLocation } from "../../../models/locations/types";
-import { SearchStatus } from "../../../models/ui/types";
 import {
   manageLocations,
   selectNewLocation,
 } from "../../../store/location-data-reducer";
 import { newLocationName } from "../../../store/location-name-reducer";
 import { newWeatherData } from "../../../store/weather-data-reducer";
-import { fetchCurrentWeather, fetchWeatherData } from "../../../utils";
-interface SearchState {
-  status: SearchStatus;
-  result: SavedLocation[];
-}
+import { fetchWeatherData } from "../../../utils";
+import { SearchResultsList } from "./search-results-list";
+
 const FinderHeader = memo(() => {
   const nav = useNavigation<NativeStackNavigationHelpers>();
   const { top } = useSafeAreaInsets();
@@ -47,84 +37,37 @@ export function Finder() {
   const locationData = useLocationData();
   const nav = useNavigation();
   const { top } = useSafeAreaInsets();
-  const [{ status, result }, setSearch] = useState<SearchState>({
-    result: [],
-    status: null,
-  });
 
   return (
-    <View style={[styles.fill, { paddingTop: top + 44 }]}>
+    <>
       <FinderHeader />
-      <ScrollView
+      <Animated.ScrollView
+        layout={CurvedTransition}
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
         style={styles.scrollView}
-        contentContainerStyle={{ padding: 16, gap: 16 }}
+        contentContainerStyle={{
+          padding: 16,
+          gap: 16,
+          paddingTop: top + 64,
+          paddingBottom: 85,
+        }}
       >
-        <SearchInput
-          onChange={(result) => {
-            setSearch((prev) => ({
-              ...prev,
-              result: result.filter(
-                (e) => !locationData.savedLocations.includes(e)
-              ),
-            }));
-          }}
-          onSearchingStatusChange={(status) =>
-            setSearch((prev) => ({ ...prev, status }))
-          }
-        />
-        {status === "searching" && (
-          <ActivityIndicator style={styles.activity} color={"#fff"} />
-        )}
-        {status === "not-found" && (
-          <Text style={styles.not_found}>Locations not found</Text>
-        )}
-        {result.map((locationFound, i) => (
-          <SearchCard
-            key={i}
-            initialIconState="add"
-            locationName={locationFound.name}
-            onAction={(action) => {
-              if (action === "add") {
-                dispatch(
-                  manageLocations({ type: "add", location: locationFound })
-                );
-                setSearch((prev) => ({
-                  ...prev,
-                  result: prev.result.filter((_, index) => index !== i),
-                }));
-              }
-            }}
-          />
-        ))}
-        <SearchCard
-          locationName="Find current location"
-          onAction={(action) => {
-            if (action === "open") {
-              fetchCurrentWeather()
-                .then(({ data, name, savedTime }) => {
-                  if (!data) return;
-                  dispatch(
-                    selectNewLocation({
-                      coordinates: { lat: data.latitude, long: data.longitude },
-                      name: name,
-                    })
-                  );
-                  dispatch(newWeatherData({ savedTime, data: data || null }));
-                  dispatch(newLocationName(name));
-                })
-                .then(() => nav.goBack());
-            }
-          }}
-          initialIconState="open"
-        />
+        <SearchResultsList />
         {locationData.savedLocations.length > 0 && (
           <Text style={styles.saved}>Saved locations</Text>
         )}
-        {locationData.savedLocations.map((savedLocation, i) => (
+
+        {locationData.savedLocations.map((savedLocation, index) => (
           <SearchCard
-            key={i}
             initialIconState="open"
+            key={savedLocation.name}
+            enableDelete
+            onDelete={() =>
+              dispatch(
+                manageLocations({ type: "remove", removeItemIndex: index })
+              )
+            }
             locationName={savedLocation.name}
             onAction={(action) => {
               if (action === "open") {
@@ -142,13 +85,13 @@ export function Finder() {
             }}
           />
         ))}
-      </ScrollView>
-    </View>
+      </Animated.ScrollView>
+    </>
   );
 }
 const styles = StyleSheet.create({
   fill: { backgroundColor: "#484B5B", height: "100%", width: "100%" },
-  scrollView: { flex: 1 },
+  scrollView: { backgroundColor: "#484B5B", height: "100%", width: "100%" },
   header: {
     paddingHorizontal: 16,
     position: "absolute",
@@ -158,6 +101,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingBottom: 8,
+    zIndex: 1,
+    backgroundColor: "#484B5B",
   },
   headerTitle: {
     color: "#fff",

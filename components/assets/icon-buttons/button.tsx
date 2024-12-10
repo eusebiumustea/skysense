@@ -1,7 +1,7 @@
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
-import { AddIcon, ArrowForwardIcon, CheckIcon } from "../icons";
+import { AddIcon, ArrowForwardIcon, CheckIcon, Search } from "../icons";
 interface ButtonProps extends TouchableOpacityProps {
-  icon: "add" | "forward" | "check";
+  icon: "add" | "forward" | "check" | "search";
 }
 export function Button({ icon = "add", ...props }: ButtonProps) {
   return (
@@ -13,6 +13,7 @@ export function Button({ icon = "add", ...props }: ButtonProps) {
       {icon === "add" && <AddIcon />}
       {icon === "check" && <CheckIcon />}
       {icon === "forward" && <ArrowForwardIcon />}
+      {icon === "search" && <Search />}
     </TouchableOpacity>
   );
 }

@@ -66,10 +66,9 @@ export function Precipitations() {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: "space-around",
               width: "100%",
               alignItems: "center",
-              columnGap: 34,
             }}
           >
             {weekDays?.map((dayName) => (
@@ -86,7 +85,7 @@ export function Precipitations() {
               ),
             }}
             yAxisSuffix="%"
-            width={width - (8 / 100) * width}
+            width={width - (10 / 100) * width}
             yAxisLabel="%"
             xAxisLabel="%"
             showBarTops={true}

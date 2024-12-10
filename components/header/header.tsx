@@ -36,7 +36,12 @@ export function Header() {
   );
 }
 const styles = StyleSheet.create({
-  label: { textAlign: "center", color: "#fff", fontSize: 16 },
+  label: {
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 16,
+    maxWidth: "70%",
+  },
   activity: { alignSelf: "center" },
   container: {
     paddingBottom: 16,
