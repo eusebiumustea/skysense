@@ -13,8 +13,7 @@ export function Navigator() {
         initialRouteName="Tabs"
         screenOptions={{
           animation: "default",
-          presentation: "transparentModal",
-          animationDuration: 120,
+
           headerShown: false,
         }}
       >

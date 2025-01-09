@@ -12,6 +12,7 @@ import {
 import { newLocationName } from "../../../store/location-name-reducer";
 import { newWeatherData } from "../../../store/weather-data-reducer";
 import { fetchCurrentWeather } from "../../../utils";
+import React from "react";
 interface SearchState {
   status: SearchStatus;
   result: SavedLocation[];

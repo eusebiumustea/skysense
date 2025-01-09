@@ -8,6 +8,7 @@ import { WeatherData } from "../../models/weather/types";
 import { getIconName } from "../../utils/render-icon";
 import { Chevron } from "../assets";
 import { DailyList } from "./daily-list";
+import React from "react";
 interface WeeklyWeatherItemProps {
   dayName: string;
   icon: ReactNode;

@@ -22,6 +22,7 @@ import { newLocationName } from "../../../store/location-name-reducer";
 import { newWeatherData } from "../../../store/weather-data-reducer";
 import { fetchCurrentWeather, fetchWeather } from "../../../utils";
 import { getIconName, RenderIcon } from "../../../utils/render-icon";
+import React from "react";
 export function Home() {
   const dispatch = useDispatch();
   const { data, savedTime } = useWeatherData();

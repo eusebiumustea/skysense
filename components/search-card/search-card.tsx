@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import { Gesture } from "react-native-gesture-handler";
 import Animated, {
-  CurvedTransition,
-  FadeOut,
   interpolate,
   runOnJS,
   useAnimatedStyle,
@@ -61,28 +59,31 @@ export const SearchCard = memo(
     const animatedOverlay = useSharedValue(0);
     const validateEnableDelete = iconState !== "loading" && enableDelete;
 
-    const gesture =
-      validateEnableDelete &&
-      Gesture.Pan()
-        .failOffsetY([-5, 5])
-        .activeOffsetX([-5, 5])
-        .onUpdate((e) => {
-          moveX.value = Math.min(Math.max(0, e.translationX), width);
-          if (e.translationX >= 170) {
-            animatedOverlay.value = withSpring(1, spring);
-          } else {
-            animatedOverlay.value = withSpring(0, spring);
-          }
-        })
-        .onEnd((e) => {
-          if (e.translationX >= 170) {
-            moveX.value = withTiming(width * 2.5, { duration: 300 });
-            animatedOverlay.value = withSpring(0, spring);
-            runOnJS(onDelete || function () {})();
-          } else {
-            moveX.value = withTiming(0, { duration: 150 });
-          }
-        });
+    const gesture = useMemo(
+      () =>
+        validateEnableDelete &&
+        Gesture.Pan()
+          .failOffsetY([-5, 5])
+          .activeOffsetX([-5, 5])
+          .onUpdate((e) => {
+            moveX.value = Math.min(Math.max(0, e.translationX), width);
+            if (e.translationX >= 170) {
+              animatedOverlay.value = withSpring(1, spring);
+            } else {
+              animatedOverlay.value = withSpring(0, spring);
+            }
+          })
+          .onEnd((e) => {
+            if (e.translationX >= 170) {
+              moveX.value = withTiming(width * 2.5, { duration: 300 });
+              animatedOverlay.value = withSpring(0, spring);
+              runOnJS(onDelete || function () {})();
+            } else {
+              moveX.value = withTiming(0, { duration: 150 });
+            }
+          }),
+      []
+    );
     const animatedPressableStyle = useAnimatedStyle(() => ({
       transform: [
         { translateX: interpolate(moveX.value, [0, width], [0, width / 2.3]) },
@@ -98,7 +99,7 @@ export const SearchCard = memo(
     }));
 
     return (
-      <Animated.View layout={CurvedTransition} exiting={FadeOut}>
+      <View>
         {validateEnableDelete && (
           <Animated.View style={[styles.overlay, animatedOverlayStyle]}>
             <DeleteIcon
@@ -157,7 +158,7 @@ export const SearchCard = memo(
             {iconState === "open" && <ArrowForwardIcon />}
           </MotiPressable>
         </DetectGesture>
-      </Animated.View>
+      </View>
     );
   }
 );

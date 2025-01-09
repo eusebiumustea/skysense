@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     alignSelf: "center",
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
   },
 });

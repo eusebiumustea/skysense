@@ -2,10 +2,12 @@ import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
 } from "@react-navigation/material-top-tabs";
-import { Header } from "../../components";
+import React from "react";
+import { Header, ScreenContainer } from "../../components";
 import { Home } from "./home";
 import { Precipitations } from "./precipitations";
-import { Dimensions, Platform } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView, View } from "react-native";
 
 const screenOptions: MaterialTopTabNavigationOptions = {
   tabBarActiveTintColor: "#fff",

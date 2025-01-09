@@ -5,6 +5,7 @@ import { AbstractChartConfig } from "react-native-chart-kit/dist/AbstractChart";
 import { PrecipitationCard, ScreenContainer } from "../../../components";
 import { useWeatherData } from "../../../hooks";
 import { useLocationData } from "../../../hooks/use-location-data";
+import React from "react";
 const chartConfig: AbstractChartConfig = {
   color: () => "#fff",
   fillShadowGradientFrom: "#D2D2D3",

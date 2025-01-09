@@ -1,8 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/commonjs/src/types";
-import { memo } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Animated, { CurvedTransition } from "react-native-reanimated";
+import React, { memo } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { Back, SearchCard } from "../../../components";
@@ -41,8 +47,7 @@ export function Finder() {
   return (
     <>
       <FinderHeader />
-      <Animated.ScrollView
-        layout={CurvedTransition}
+      <ScrollView
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         style={styles.scrollView}
@@ -85,7 +90,7 @@ export function Finder() {
             }}
           />
         ))}
-      </Animated.ScrollView>
+      </ScrollView>
     </>
   );
 }
